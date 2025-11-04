@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Physics of the Samurai Sword: Why Sharp Edges Cut</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.8;
+            background: linear-gradient(135deg, #c31432 0%, #240b36 100%);
+            color: #333;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .presentation-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .header h2 {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            font-weight: normal;
+            font-style: italic;
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            margin-top: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #c31432 0%, #e74c3c 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .slide-counter {
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .slides-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 40px;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            min-height: 80%;
+        }
+        
+        .slide h3 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #c31432;
+            padding-bottom: 15px;
+        }
+        
+        .slide h4 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        
+        .slide p {
+            margin: 15px 0;
+            font-size: 1.05em;
+        }
+        
+        .big-idea {
+            background: linear-gradient(135deg, #c31432 0%, #e74c3c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .visual-callout {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .visual-callout strong {
+            color: #ffd700;
+            font-size: 1.2em;
+        }
+        
+        .equation-box {
+            background-color: #f8f9fa;
+            border: 3px solid #c31432;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-box {
+            background-color: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+        }
+        
+        .stat-box ul {
+            margin: 10px 0 0 20px;
+        }
+        
+        .stat-box li {
+            margin: 10px 0;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .comparison-box {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .comparison-box h4 {
+            margin: 0 0 10px 0;
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            border: 3px dashed #c31432;
+            padding: 60px 30px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-button {
+            background: linear-gradient(135deg, #c31432 0%, #240b36 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            font-family: Georgia, serif;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .nav-button:active {
+            transform: translateY(0);
+        }
+        
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .nav-button.prev::before {
+            content: "← ";
+        }
+        
+        .nav-button.next::after {
+            content: " →";
+        }
+        
+        .nav-center {
+            text-align: center;
+        }
+        
+        .nav-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #c31432;
+            width: 30px;
+            border-radius: 5px;
+        }
+        
+        em {
+            color: #c31432;
+            font-style: italic;
+        }
+        
+        strong {
+            color: #c31432;
+        }
+        
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .callout-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #1a1a1a;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .question-slide .slide-content {
+            background: #e8f5e9;
+        }
+        
+        .question {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .choices {
+            margin: 15px 0;
+        }
+        
+        .choice {
+            margin: 10px 0;
+            display: block;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .choice:hover {
+            background-color: #e9ecef;
+        }
+        
+        .choice input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .check-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .check-button:hover {
+            background: #218838;
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .difficulty {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .calculation-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .calculation-step {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        /* Override to prevent image stretching */
+        .slide-content img {
+            width: auto !important;
+            height: auto !important;
+            max-width: 100% !important;
+            max-height: none !important;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border: none !important;
+            box-shadow: none;
+            object-fit: contain !important;
+        }
+        
+        .image-placeholder {
+            border: none !important;
+            background: none !important;
+            padding: 0 !important;
+            min-height: 0 !important;
+            box-shadow: none !important;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⚔️ The Physics of the Samurai Sword</h1>
+            <h2>Why Sharp Edges Cut: The Science Behind the Blade</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="slide-counter">
+                Slide <span id="currentSlide">1</span> of <span id="totalSlides">16</span>
+            </div>
+        </div>
+
+        <!-- Slides Container -->
+        <div class="slides-container">
+            
+            <!-- SLIDE 1: Title & Hook -->
+            <div class="slide active" data-slide="1">
+                <div class="slide-content">
+                    <h3>The Legendary Cutting Power ⚔️</h3>
+                    <div class="big-idea">
+                        A master samurai could slice through bamboo, silk, and even armor with a single stroke of his katana.
+                    </div>
+                    <p style="font-size: 1.2em; text-align: center; margin: 30px 0;">But how can a thin piece of metal—less than 3mm thick at its edge—cut through such tough materials?</p>
+                    <div class="visual-callout">
+                        <strong>The answer lies in fundamental physics!</strong><br>
+                        The same principles that make katanas deadly also explain why knives cut, axes split wood, and surgical scalpels can slice with microscopic precision.
+                    </div>
+                    <p style="text-align: center; margin-top: 30px; font-size: 1.1em; color: #666;">
+                        <em>Get ready to discover the elegant science behind one of history's most legendary weapons.</em>
+                    </p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: The Mystery -->
+            <div class="slide" data-slide="2">
+                <div class="slide-content">
+                    <h3>The Cutting Mystery 🤔</h3>
+                    <p style="font-size: 1.15em;">Think about this paradox:</p>
+                    <div class="two-column">
+                        <div class="comparison-box" style="background: #ffebee; border: 2px solid #ef5350;">
+                            <h4>A Baseball Bat</h4>
+                            <p style="margin: 15px 0;">Heavy, thick, lots of mass</p>
+                            <p style="margin: 15px 0;"><strong>Can't cut through bamboo</strong></p>
+                        </div>
+                        <div class="comparison-box" style="background: #e8f5e9; border: 2px solid #66bb6a;">
+                            <h4>A Katana</h4>
+                            <p style="margin: 15px 0;">Lighter, thin blade, sharp edge</p>
+                            <p style="margin: 15px 0;"><strong>Slices through bamboo easily</strong></p>
+                        </div>
+                    </div>
+                    <div class="callout-box">
+                        <p style="margin: 10px 0;"><strong>The key isn't just force—it's what you do with that force.</strong></p>
+                        <p style="margin: 10px 0;">A katana doesn't succeed because it hits harder. It succeeds because it <em>concentrates</em> force into the smallest possible area.</p>
+                    </div>
+                    <p style="text-align: center; margin-top: 30px; font-size: 1.2em;">
+                        <strong>This is the physics of pressure.</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: The Fundamental Equation -->
+            <div class="slide" data-slide="3">
+                <div class="slide-content">
+                    <h3>The Fundamental Equation</h3>
+                    <p style="font-size: 1.15em; text-align: center; margin: 25px 0;">Everything about cutting comes down to one simple principle:</p>
+                    <div class="equation-box">
+                        Pressure = Force ÷ Area
+                    </div>
+                    <p><strong>Pressure</strong> is the force applied per unit of area. It's what actually determines whether something cuts or just bounces off.</p>
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin: 25px 0;">
+                        <p style="margin: 10px 0;"><strong>Force:</strong> How hard you push or swing (measured in Newtons)</p>
+                        <p style="margin: 10px 0;"><strong>Area:</strong> The size of the contact surface (measured in square millimeters)</p>
+                        <p style="margin: 10px 0;"><strong>Pressure:</strong> Force concentrated into that area (measured in Pascals or N/mm²)</p>
+                    </div>
+                    <div class="big-idea">
+                        The smaller the area, the greater the pressure!<br>
+                        <span style="font-size: 0.8em;">This is why sharp edges cut.</span>
+                    </div>
+                    <p style="text-align: center; margin-top: 20px; font-size: 1.05em;">A sharp blade has an incredibly tiny contact area—so even moderate force creates enormous pressure.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Pressure Demonstration IMAGE -->
+            <div class="slide" data-slide="4">
+                <div class="slide-content">
+                    <h3>Pressure in Action</h3>
+                    <p>Look at the dramatic difference between a dull edge and a sharp edge applying the <em>same amount of force</em>:</p>
+                    <div class="image-placeholder">
+                        <img src="sword_image1_pressure_comparison.png" alt="Side by side comparison showing dull edge with large contact area creating low pressure versus sharp edge with tiny contact area creating high pressure" style="width:auto; height:auto; display:block; margin:0 auto; border-radius:15px;">
+                    </div>
+                    <div class="visual-callout">
+                        ⚡ <strong>Notice the power of geometry!</strong> ⚡<br>
+                        The sharp edge concentrates all that force into a contact area that might be <strong>100 times smaller</strong> than the dull edge.<br><br>
+                        That means the pressure—and the cutting power—is <strong>100 times greater</strong>!
+                    </div>
+                    <p style="text-align: center; margin-top: 20px; font-size: 1.1em;">This is why you can push against a dull butter knife all day without cutting yourself, but a sharp blade requires just a light touch to slice skin.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Real Numbers -->
+            <div class="slide" data-slide="5">
+                <div class="slide-content">
+                    <h3>The Math Behind the Magic 🔢</h3>
+                    <p>Let's calculate actual pressures using realistic numbers:</p>
+                    <div class="calculation-box">
+                        <div class="calculation-step">
+                            <strong>Scenario: You swing a katana</strong><br>
+                            Force applied at impact: 500 Newtons (about 112 pounds of force)
+                        </div>
+                        <div class="calculation-step">
+                            <strong>Dull edge (2mm thick contact):</strong><br>
+                            Contact area: 2 mm × 100 mm = 200 mm²<br>
+                            Pressure = 500 N ÷ 200 mm² = <strong>2.5 N/mm²</strong>
+                        </div>
+                        <div class="calculation-step">
+                            <strong>Sharp katana edge (0.02mm thick):</strong><br>
+                            Contact area: 0.02 mm × 100 mm = 2 mm²<br>
+                            Pressure = 500 N ÷ 2 mm² = <strong>250 N/mm²</strong>
+                        </div>
+                    </div>
+                    <div class="big-idea">
+                        The sharp edge creates 100× more pressure!<br>
+                        <span style="font-size: 0.8em;">Same force, 100 times more cutting power</span>
+                    </div>
+                    <div class="callout-box">
+                        <p><strong>Real-World Comparison:</strong> 250 N/mm² is enough pressure to exceed the strength of the molecular bonds holding bamboo, silk, and even some types of leather armor together. In other words, the material literally breaks apart at the molecular level. The dull edge's 2.5 N/mm² barely makes a dent.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: The Wedge Principle -->
+            <div class="slide" data-slide="6">
+                <div class="slide-content">
+                    <h3>The Wedge: A Simple Machine</h3>
+                    <p style="font-size: 1.15em;">A blade's edge isn't just thin—it's also shaped like a <em>wedge</em>, which is one of the six classical simple machines.</p>
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin: 25px 0;">
+                        <p><strong>What a wedge does:</strong> It converts force applied in one direction (downward) into force in a different direction (sideways), pushing material apart.</p>
+                        <p style="margin-top: 15px;">When you push a wedge down into wood, the wood doesn't just compress—it gets <em>split apart</em> sideways.</p>
+                    </div>
+                    <div class="big-idea">
+                        A blade is a mobile wedge!<br>
+                        <span style="font-size: 0.8em;">It converts your downward/forward force into sideways splitting force</span>
+                    </div>
+                    <p style="margin-top: 25px;"><strong>The wedge angle matters:</strong></p>
+                    <ul>
+                        <li><strong>Steeper angle (like an axe):</strong> More force multiplication, splits things wide open, but needs more initial force</li>
+                        <li><strong>Shallow angle (like a katana):</strong> Less splitting force, but cuts with much less resistance—perfect for slicing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Wedge in Action IMAGE -->
+            <div class="slide" data-slide="7">
+                <div class="slide-content">
+                    <h3>How the Wedge Splits Material</h3>
+                    <p>Watch how a blade's wedge shape converts downward force into sideways splitting force:</p>
+                    <div class="image-placeholder">
+                        <img src="sword_image2_wedge_forces.png" alt="Cross section diagram showing blade edge entering material with force vectors showing downward applied force converting to outward splitting forces, with wedge angle labeled" style="width:auto; height:auto; display:block; margin:0 auto; border-radius:15px;">
+                    </div>
+                    <div class="visual-callout">
+                        🔺 <strong>The geometry does the work!</strong> 🔺<br>
+                        The wedge shape means you're not just pushing material down—you're forcing it apart from the inside.<br><br>
+                        This is why even thin materials like paper can be cut: the wedge creates internal stress that exceeds the material's strength.
+                    </div>
+                    <p style="text-align: center; margin-top: 20px; font-size: 1.1em;">The sharper the blade, the less resistance it encounters while splitting—which is why katanas feel almost "frictionless" when cutting.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Katana Edge Geometry -->
+            <div class="slide" data-slide="8">
+                <div class="slide-content">
+                    <h3>The Perfect Angle: Why 30-40°?</h3>
+                    <p>Japanese swordsmiths discovered through centuries of experimentation that katanas work best with a total edge angle of approximately <strong>30-40 degrees</strong>.</p>
+                    <div class="stat-box">
+                        <p><strong>Why this angle is optimal:</strong></p>
+                        <ul>
+                            <li><strong>Sharp enough</strong> to concentrate force into a tiny area</li>
+                            <li><strong>Strong enough</strong> not to chip or roll when hitting bone or armor</li>
+                            <li><strong>Efficient enough</strong> to slice with minimal resistance</li>
+                        </ul>
+                    </div>
+                    <div class="two-column">
+                        <div class="comparison-box" style="background: #fff3e0; border: 2px solid #ff9800;">
+                            <h4>Too Sharp (&lt;20°)</h4>
+                            <p style="font-size: 0.95em;">Maximum cutting power</p>
+                            <p style="font-size: 0.95em;"><strong>BUT:</strong> Edge chips easily, can't handle impact</p>
+                        </div>
+                        <div class="comparison-box" style="background: #e0f2f1; border: 2px solid #009688;">
+                            <h4>Too Blunt (&gt;50°)</h4>
+                            <p style="font-size: 0.95em;">Very durable edge</p>
+                            <p style="font-size: 0.95em;"><strong>BUT:</strong> Can't cut efficiently, more like a club</p>
+                        </div>
+                    </div>
+                    <div class="callout-box">
+                        <p><strong>Engineering Trade-offs:</strong> A katana edge represents a brilliant compromise between sharpness (cutting ability) and durability (surviving combat). This is engineering optimization at its finest!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: The Cutting Motion -->
+            <div class="slide" data-slide="9">
+                <div class="slide-content">
+                    <h3>It's Not Just Chopping—It's Slicing!</h3>
+                    <p style="font-size: 1.15em; text-align: center; margin: 25px 0;">Here's something crucial: <strong>A katana doesn't cut like an axe.</strong></p>
+                    <div class="two-column">
+                        <div class="comparison-box" style="background: #ffebee; border: 2px solid #e57373;">
+                            <h4>❌ Pure Chopping</h4>
+                            <p style="margin: 15px 0; font-size: 0.95em;">Force directly perpendicular to edge</p>
+                            <p style="margin: 15px 0; font-size: 0.95em;">Like an axe splitting wood</p>
+                            <p style="margin: 15px 0; font-size: 0.95em;"><strong>High resistance</strong></p>
+                        </div>
+                        <div class="comparison-box" style="background: #e8f5e9; border: 2px solid #81c784;">
+                            <h4>✓ Slicing</h4>
+                            <p style="margin: 15px 0; font-size: 0.95em;">Force at angle + drawing motion</p>
+                            <p style="margin: 15px 0; font-size: 0.95em;">Like a katana or chef's knife</p>
+                            <p style="margin: 15px 0; font-size: 0.95em;"><strong>Low resistance</strong></p>
+                        </div>
+                    </div>
+                    <div class="big-idea">
+                        Slicing adds a motion parallel to the blade's edge!
+                    </div>
+                    <p style="margin-top: 20px;"><strong>Why this matters:</strong> When you add a drawing or pulling component to the cut, the blade effectively "saws" through the material using its microscopic serrations. This dramatically reduces the force needed.</p>
+                    <div class="callout-box">
+                        <p><strong>Try this at home:</strong> Use a bread knife to cut a tomato. First, press straight down (chopping). The tomato squishes. Now try with a gentle sawing motion (slicing). It cuts cleanly with almost no pressure. Same principle!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Motion Comparison IMAGE -->
+            <div class="slide" data-slide="10">
+                <div class="slide-content">
+                    <h3>The Draw Cut (Hikiri)</h3>
+                    <p>Samurai perfected a technique called <em>hikiri</em>—the draw cut. Watch how motion transforms cutting efficiency:</p>
+                    <div class="image-placeholder">
+                        <img src="sword_image4_cutting_motion.png" alt="Sequential panels showing ineffective chopping motion versus highly effective slicing motion with draw, including motion vectors and force distribution" style="width:auto; height:auto; display:block; margin:0 auto; border-radius:15px;">
+                    </div>
+                    <div class="visual-callout">
+                        ⚔️ <strong>The secret of legendary swordsmen!</strong> ⚔️<br>
+                        Masters didn't just swing harder—they understood physics.<br><br>
+                        The drawing motion means the blade travels through material at an angle, encountering fresh microscopic edges along its length. It's like having thousands of tiny razor blades working simultaneously!
+                    </div>
+                    <p style="text-align: center; margin-top: 20px; font-size: 1.1em;">This is why samurai cuts looked effortless—they were using physics, not brute force.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: The Curve (Sori) -->
+            <div class="slide" data-slide="11">
+                <div class="slide-content">
+                    <h3>Why Katanas Are Curved 🌙</h3>
+                    <p style="font-size: 1.15em;">The katana's curve (called <em>sori</em> in Japanese) isn't just aesthetic—it's functional physics!</p>
+                    <div class="stat-box">
+                        <p><strong>What the curve does:</strong></p>
+                        <ul>
+                            <li><strong>Naturally facilitates slicing:</strong> The curve means as you swing, the blade automatically transitions from tip to base, creating that crucial drawing motion</li>
+                            <li><strong>Optimizes impact geometry:</strong> The curve ensures more of the blade's edge contacts the target at the ideal angle</li>
+                            <li><strong>Allows shorter, faster draws:</strong> Curved swords can be drawn from the scabbard more quickly</li>
+                            <li><strong>Distributes stress:</strong> The curve helps distribute impact forces along the blade's length</li>
+                        </ul>
+                    </div>
+                    <div class="big-idea">
+                        The curve transforms geometry into motion!<br>
+                        <span style="font-size: 0.8em;">It's like the blade is pre-programmed to slice</span>
+                    </div>
+                    <div class="callout-box">
+                        <p><strong>Engineering insight:</strong> Compare this to a straight European longsword, which is optimized for thrusting. Different curve = different physics = different fighting style. Form follows function!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: Material Science -->
+            <div class="slide" data-slide="12">
+                <div class="slide-content">
+                    <h3>The Steel Secret: Hard Edge, Flexible Spine</h3>
+                    <p style="font-size: 1.15em;">Here's the engineering problem: You want a <strong>hard edge</strong> (stays sharp) but also a <strong>flexible spine</strong> (doesn't shatter).</p>
+                    <p>These properties are normally opposites in metallurgy!</p>
+                    <div class="two-column">
+                        <div class="comparison-box" style="background: #e3f2fd; border: 2px solid #2196f3;">
+                            <h4>Hard Steel</h4>
+                            <p style="font-size: 0.9em; margin: 10px 0;"><strong>Pros:</strong> Holds sharp edge</p>
+                            <p style="font-size: 0.9em; margin: 10px 0;"><strong>Cons:</strong> Brittle, can shatter</p>
+                        </div>
+                        <div class="comparison-box" style="background: #f3e5f5; border: 2px solid #9c27b0;">
+                            <h4>Soft Steel</h4>
+                            <p style="font-size: 0.9em; margin: 10px 0;"><strong>Pros:</strong> Flexible, absorbs impact</p>
+                            <p style="font-size: 0.9em; margin: 10px 0;"><strong>Cons:</strong> Won't hold edge</p>
+                        </div>
+                    </div>
+                    <div class="big-idea">
+                        Japanese smiths solved this: They made ONE blade with BOTH properties!
+                    </div>
+                    <p style="margin-top: 25px;"><strong>The secret: Differential hardening</strong></p>
+                    <p>By coating the spine with clay before heat treatment and quenching, smiths created:</p>
+                    <ul>
+                        <li><strong>Hard edge (~60 HRC hardness):</strong> Cools quickly, forms very hard steel</li>
+                        <li><strong>Soft spine (~40 HRC hardness):</strong> Cools slowly, stays flexible</li>
+                    </ul>
+                    <p style="margin-top: 20px;">This is materials engineering genius!</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: Katana Construction IMAGE -->
+            <div class="slide" data-slide="13">
+                <div class="slide-content">
+                    <h3>Inside a Katana: The Hamon Line</h3>
+                    <p>Look at the cross-section of a katana blade. The visible line you see on finished swords (the <em>hamon</em>) marks the boundary between hard and soft steel:</p>
+                    <div class="image-placeholder">
+                        <img src="sword_image3_katana_construction.png" alt="Detailed cross section of katana blade showing hard edge layer at 60 HRC hardness, softer flexible spine at 40 HRC, and the hamon line between zones with labels" style="width:auto; height:auto; display:block; margin:0 auto; border-radius:15px;">
+                    </div>
+                    <div class="visual-callout">
+                        🔥 <strong>That wavy line isn't decoration—it's evidence of physics!</strong> 🔥<br>
+                        The hamon shows where the different crystal structures meet. Hard martensite near the edge, softer pearlite in the spine.<br><br>
+                        This isn't paint or engraving—it's the actual molecular structure of the steel made visible!
+                    </div>
+                    <div class="callout-box">
+                        <p><strong>Why this matters:</strong> A uniformly hard blade would crack on impact. A uniformly soft blade would bend and dull. The katana's composite structure gives you the best of both worlds—engineering perfection achieved through centuries of experimentation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: Blade Comparison IMAGE -->
+            <div class="slide" data-slide="14">
+                <div class="slide-content">
+                    <h3>Different Blades, Different Physics</h3>
+                    <p>Every blade design represents a different optimization for different tasks. Same physics, different applications:</p>
+                    <div class="image-placeholder">
+                        <img src="sword_image5_blade_comparison.png" alt="Comparison chart showing katana, European longsword, axe, and surgical scalpel with their different edge geometries, wedge angles, and optimal uses labeled" style="width:auto; height:auto; display:block; margin:0 auto; border-radius:15px;">
+                    </div>
+                    <div class="stat-box">
+                        <p><strong>Notice the trade-offs:</strong></p>
+                        <ul>
+                            <li><strong>Katana:</strong> Optimized for slicing cuts, balanced edge angle</li>
+                            <li><strong>Longsword:</strong> Straight for thrusting, more durable edge for armored opponents</li>
+                            <li><strong>Axe:</strong> Wide wedge angle for maximum splitting force on wood</li>
+                            <li><strong>Scalpel:</strong> Extremely acute angle for minimal tissue damage</li>
+                        </ul>
+                    </div>
+                    <div class="big-idea">
+                        Physics determines form!<br>
+                        <span style="font-size: 0.8em;">Every blade shape is an engineering solution to a specific problem</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 15: Questions -->
+            <div class="slide question-slide" data-slide="15">
+                <div class="slide-content">
+                    <h3>⚔️ Test Your Understanding</h3>
+                    
+                    <div class="question">
+                        <div class="question-text">1. What fundamental equation explains why sharp blades cut better than dull blades?</div>
+                        <div class="difficulty">(Recall - Basic)</div>
+                        <div class="choices">
+                            <label class="choice"><input type="radio" name="q1" value="A"> A) Force = Mass × Acceleration</label>
+                            <label class="choice"><input type="radio" name="q1" value="B"> B) Pressure = Force ÷ Area</label>
+                            <label class="choice"><input type="radio" name="q1" value="C"> C) Energy = Force × Distance</label>
+                            <label class="choice"><input type="radio" name="q1" value="D"> D) Work = Power × Time</label>
+                        </div>
+                        <button class="check-button" onclick="checkAnswer('q1', 'B', 'Pressure = Force ÷ Area is the key! Sharp blades have a tiny contact area, which creates enormous pressure even with moderate force.')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">2. A blade's wedge shape converts force applied in one direction into force in what other direction?</div>
+                        <div class="difficulty">(Recall - Moderate)</div>
+                        <div class="choices">
+                            <label class="choice"><input type="radio" name="q2" value="A"> A) Backward, pushing the blade away</label>
+                            <label class="choice"><input type="radio" name="q2" value="B"> B) Upward, lifting the material</label>
+                            <label class="choice"><input type="radio" name="q2" value="C"> C) Sideways, splitting material apart</label>
+                            <label class="choice"><input type="radio" name="q2" value="D"> D) Circular, spinning the blade</label>
+                        </div>
+                        <button class="check-button" onclick="checkAnswer('q2', 'C', 'The wedge converts downward/forward force into sideways splitting force. This is how the blade pushes material apart from within!')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">3. If a katana edge creates 200 N/mm² of pressure but a dull blade creates only 3 N/mm², how many times more cutting pressure does the katana have?</div>
+                        <div class="difficulty">(Application - Moderate)</div>
+                        <div class="choices">
+                            <label class="choice"><input type="radio" name="q3" value="A"> A) About 20 times more</label>
+                            <label class="choice"><input type="radio" name="q3" value="B"> B) About 50 times more</label>
+                            <label class="choice"><input type="radio" name="q3" value="C"> C) About 67 times more</label>
+                            <label class="choice"><input type="radio" name="q3" value="D"> D) About 100 times more</label>
+                        </div>
+                        <button class="check-button" onclick="checkAnswer('q3', 'C', '200 ÷ 3 = 66.7, or about 67 times more pressure. This is why even small differences in edge thickness create huge differences in cutting ability!')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4. Why does slicing with a drawing motion (like a katana cut) require less force than pure chopping (like an axe)?</div>
+                        <div class="difficulty">(Application - Advanced)</div>
+                        <div class="choices">
+                            <label class="choice"><input type="radio" name="q4" value="A"> A) The drawing motion makes the blade heavier</label>
+                            <label class="choice"><input type="radio" name="q4" value="B"> B) The blade encounters fresh edges along its length, like thousands of tiny razors working together</label>
+                            <label class="choice"><input type="radio" name="q4" value="C"> C) The motion heats up the blade, making it sharper</label>
+                            <label class="choice"><input type="radio" name="q4" value="D"> D) The drawing motion increases the wedge angle</label>
+                        </div>
+                        <button class="check-button" onclick="checkAnswer('q4', 'B', 'The drawing motion means different parts of the blade continuously engage fresh material, effectively multiplying the cutting action. It\'s like the difference between pushing a saw straight down versus sawing back and forth.')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5. What problem does the katana's differential hardening (hard edge, soft spine) solve?</div>
+                        <div class="difficulty">(Synthesis - Advanced)</div>
+                        <div class="choices">
+                            <label class="choice"><input type="radio" name="q5" value="A"> A) It makes the sword lighter</label>
+                            <label class="choice"><input type="radio" name="q5" value="B"> B) It allows the sword to bend without breaking while maintaining a sharp edge</label>
+                            <label class="choice"><input type="radio" name="q5" value="C"> C) It makes the hamon line visible</label>
+                            <label class="choice"><input type="radio" name="q5" value="D"> D) It increases the wedge angle</label>
+                        </div>
+                        <button class="check-button" onclick="checkAnswer('q5', 'B', 'This is brilliant materials engineering! Normally you must choose between hardness (holds an edge but brittle) and toughness (flexible but won\'t stay sharp). Differential hardening gives you both properties in one blade.')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">6. Why does the katana's curve (sori) make it more effective for slicing?</div>
+                        <div class="difficulty">(Inference - Advanced)</div>
+                        <div class="choices">
+                            <label class="choice"><input type="radio" name="q6" value="A"> A) The curve makes the blade heavier at the tip</label>
+                            <label class="choice"><input type="radio" name="q6" value="B"> B) The curve naturally creates a drawing motion as you swing, converting geometry into the optimal cutting motion</label>
+                            <label class="choice"><input type="radio" name="q6" value="C"> C) The curve increases the pressure by making the blade thinner</label>
+                            <label class="choice"><input type="radio" name="q6" value="D"> D) The curve is only decorative</label>
+                        </div>
+                        <button class="check-button" onclick="checkAnswer('q6', 'B', 'The curve is physics made visible! As you swing a curved blade, it automatically transitions from tip to base, creating that crucial drawing motion. The geometry itself generates the optimal cutting action—genius design!')">Check Answer</button>
+                        <div class="feedback" id="q6-feedback"></div>
+                    </div>
+
+                    <div style="margin-top: 30px; padding: 15px; background-color: #fff3cd; border-radius: 5px;">
+                        <p style="margin: 0; font-size: 0.9em;"><strong>⚔️ Samurai Wisdom:</strong> The greatest swordsmen understood they weren't fighting with muscle—they were fighting with physics. Understanding how forces, pressure, and materials work together is what separated masters from beginners!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 16: Summary -->
+            <div class="slide" data-slide="16">
+                <div class="slide-content">
+                    <h3>🎯 The Physics of Cutting: Key Principles</h3>
+                    <div style="background: linear-gradient(135deg, #c31432 0%, #240b36 100%); color: white; padding: 30px; border-radius: 15px; margin: 20px 0;">
+                        <h4 style="color: white; text-align: center; margin-top: 0;">What Makes a Katana Cut:</h4>
+                        <ul style="font-size: 1.1em; line-height: 2;">
+                            <li><strong>Pressure:</strong> Force concentrated into the smallest possible area (Pressure = Force ÷ Area)</li>
+                            <li><strong>The Wedge:</strong> Converts downward force into sideways splitting force</li>
+                            <li><strong>Slicing Motion:</strong> Drawing cuts multiply effectiveness by engaging fresh edges</li>
+                            <li><strong>The Curve:</strong> Geometry that naturally creates optimal cutting motion</li>
+                            <li><strong>Material Engineering:</strong> Hard edge + flexible spine = doesn't break, stays sharp</li>
+                            <li><strong>Optimal Angle:</strong> 30-40° balances cutting power with durability</li>
+                        </ul>
+                    </div>
+                    <div class="big-idea" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); color: #1a1a1a; margin-top: 30px;">
+                        Every aspect of the katana—from its curve to its edge angle to its steel composition—is physics in action.<br><br>
+                        <strong>The samurai sword is engineering perfection!</strong>
+                    </div>
+                    <div class="callout-box" style="margin-top: 30px;">
+                        <p><strong>The Universal Truth:</strong> These same principles apply everywhere—from kitchen knives to surgical scalpels to industrial cutting tools. Understanding the physics of the samurai sword means understanding the physics of cutting itself!</p>
+                    </div>
+                    <p style="text-align: center; margin-top: 30px; font-size: 1.1em; color: #666;">
+                        <em>Now you know the science behind the legend. ⚔️</em>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-button prev" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <div class="nav-center">
+                <div class="nav-dots" id="navDots"></div>
+                <div style="margin-top: 5px; color: #666; font-size: 0.9em;">
+                    Use arrow keys: ← →
+                </div>
+            </div>
+            <button class="nav-button next" id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Initialize navigation dots
+        function initDots() {
+            const dotsContainer = document.getElementById('navDots');
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        // Update slide display
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlideIndex) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            // Update navigation dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlideIndex) {
+                    dot.classList.add('active');
+                }
+            });
+            
+            // Update slide counter
+            document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
+            document.getElementById('totalSlides').textContent = totalSlides;
+            
+            // Update progress bar
+            const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlideIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides - 1;
+            
+            // Scroll slide content to top
+            const activeSlide = slides[currentSlideIndex];
+            activeSlide.scrollTop = 0;
+        }
+        
+        // Change slide
+        function changeSlide(direction) {
+            const newIndex = currentSlideIndex + direction;
+            if (newIndex >= 0 && newIndex < totalSlides) {
+                currentSlideIndex = newIndex;
+                updateSlide();
+            }
+        }
+        
+        // Go to specific slide
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlideIndex = index;
+                updateSlide();
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+        
+        // Question checking function
+        function checkAnswer(questionId, correctAnswer, explanation) {
+            const selectedRadio = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackDiv = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedRadio) {
+                feedbackDiv.innerHTML = '<p style="margin: 10px 0;">⚠️ Please select an answer first!</p>';
+                feedbackDiv.className = 'feedback show';
+                return;
+            }
+            
+            const userAnswer = selectedRadio.value;
+            
+            if (userAnswer === correctAnswer) {
+                feedbackDiv.innerHTML = `
+                    <p style="margin: 0; font-weight: bold;">✓ Correct!</p>
+                    <p style="margin: 8px 0 0 0;">${explanation}</p>
+                `;
+                feedbackDiv.className = 'feedback show correct';
+            } else {
+                feedbackDiv.innerHTML = `
+                    <p style="margin: 0; font-weight: bold;">✗ Not quite.</p>
+                    <p style="margin: 8px 0 0 0;">The correct answer is <strong>${correctAnswer}</strong>.</p>
+                    <p style="margin: 8px 0 0 0;">${explanation}</p>
+                `;
+                feedbackDiv.className = 'feedback show incorrect';
+            }
+        }
+        
+        // Initialize on load
+        window.onload = () => {
+            initDots();
+            updateSlide();
+        };
+    </script>
+</body>
+</html>
